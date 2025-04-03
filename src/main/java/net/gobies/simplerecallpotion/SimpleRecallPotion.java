@@ -2,6 +2,7 @@ package net.gobies.simplerecallpotion;
 
 import com.mojang.logging.LogUtils;
 import net.gobies.simplerecallpotion.item.ModItems;
+import net.gobies.simplerecallpotion.recipe.brewing.BrewingRecipes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -22,6 +23,8 @@ public class SimpleRecallPotion {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modBus);
+
+        BrewingRecipes.register(modBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
