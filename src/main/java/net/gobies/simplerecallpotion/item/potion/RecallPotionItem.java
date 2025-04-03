@@ -75,15 +75,12 @@ public class RecallPotionItem extends Item {
                             }
                         }
                     } else {
-                        // no respawn point
                         serverPlayer.displayClientMessage(Component.translatable("simple.recall.respawn"), true);
                     }
                 } catch (Exception e) {
-                    // error finding spawn with no spawn point
                     serverPlayer.displayClientMessage(Component.translatable("simple.recall.respawn"), true);
                 }
             } else {
-                // no dimension teleport
                 serverPlayer.displayClientMessage(Component.translatable("simple.recall.dimension"), true);
             }
         }
