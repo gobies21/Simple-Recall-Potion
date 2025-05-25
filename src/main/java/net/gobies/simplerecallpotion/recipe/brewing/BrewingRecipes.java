@@ -1,7 +1,7 @@
 package net.gobies.simplerecallpotion.recipe.brewing;
 
 import net.gobies.simplerecallpotion.Config;
-import net.gobies.simplerecallpotion.item.ModItems;
+import net.gobies.simplerecallpotion.item.PotionRegister;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -28,7 +28,7 @@ public class BrewingRecipes {
             BrewingRecipeRegistry.addRecipe(
                     Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
                     Ingredient.of(Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Config.RECALL_POTION_INGREDIENT.get())))),
-                    (ModItems.RecallPotion.get()).getDefaultInstance());
+                    (PotionRegister.RecallPotion.get()).getDefaultInstance());
         });
     }
 }

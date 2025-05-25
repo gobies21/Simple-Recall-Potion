@@ -13,7 +13,7 @@ public class CreativeTab {
     @SubscribeEvent
     public static void BuildContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
-            event.accept(ModItems.RecallPotion.get());
+            event.accept(PotionRegister.RecallPotion.get());
         }
     }
 }

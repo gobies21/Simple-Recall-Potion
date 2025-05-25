@@ -4,7 +4,7 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId="simplerecall"
-version="1.0.0"
+version="1.0.2"
 displayName="Simple Recall Potion"
 authors="gobies"
 description='''simple recall potion inspired by terraria!'''
