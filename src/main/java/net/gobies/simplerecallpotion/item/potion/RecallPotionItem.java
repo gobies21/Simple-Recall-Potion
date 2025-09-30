@@ -1,6 +1,8 @@
 package net.gobies.simplerecallpotion.item.potion;
 
 import net.gobies.simplerecallpotion.Config;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -50,8 +52,8 @@ public class RecallPotionItem extends Item {
     }
 
     @Override
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entityLiving) {
-        if (!level.isClientSide && entityLiving instanceof ServerPlayer serverPlayer) {
+    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
+        if (!level.isClientSide && entity instanceof ServerPlayer serverPlayer) {
             boolean interDimensional = Config.RECALL_POTION_INTERDIMENSIONAL.get();
             ResourceKey<Level> currentDimension = level.dimension();
             ResourceKey<Level> respawnDimension = serverPlayer.getRespawnDimension();
@@ -61,11 +63,14 @@ public class RecallPotionItem extends Item {
                     Optional<Vec3> respawnLocation = Player.findRespawnPositionAndUseSpawnBlock(serverWorld, Objects.requireNonNull(serverPlayer.getRespawnPosition()), serverPlayer.getRespawnAngle(), false, false);
                     if (respawnLocation.isPresent()) {
                         Vec3 respawnVec = respawnLocation.get();
+                        Vec3 currentVec = serverPlayer.position();
 
+                        spawnPortalParticles(serverPlayer, currentVec);
                         serverPlayer.teleportTo(serverWorld, respawnVec.x, respawnVec.y, respawnVec.z, serverPlayer.getYRot(), serverPlayer.getXRot());
+                        spawnPortalParticles(serverPlayer, respawnVec);
                         serverWorld.playSound(null, respawnVec.x, respawnVec.y, respawnVec.z, SoundEvents.ENDERMAN_TELEPORT, serverPlayer.getSoundSource(), 1.0F, 1.0F);
                         serverPlayer.playSound(SoundEvents.ENDERMAN_TELEPORT, 2.0F, 1.0F);
-                        serverPlayer.getCooldowns().addCooldown(stack.getItem(), 20 * Config.RECALL_POTION_COOLDOWN.get()); // 20 ticks = 1 second
+                        serverPlayer.getCooldowns().addCooldown(stack.getItem(), 20 * Config.RECALL_POTION_COOLDOWN.get());
                         if (!serverPlayer.isCreative()) {
                             if (stack.getCount() == 1) {
                                 serverPlayer.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.GLASS_BOTTLE, 1));
@@ -85,5 +90,18 @@ public class RecallPotionItem extends Item {
             }
         }
         return stack;
+    }
+
+    private static void spawnPortalParticles(ServerPlayer serverPlayer, Vec3 position) {
+        if (position != null) {
+            for (int x = -1; x <= 1; x++) {
+                for (int y = -1; y <= 1; y++) {
+                    for (int z = -1; z <= 1; z++) {
+                        Vec3 particlePos = position.add(x * 0.3, y * 0.5, z * 0.3);
+                        serverPlayer.connection.send(new ClientboundLevelParticlesPacket(ParticleTypes.PORTAL, true, particlePos.x, particlePos.y, particlePos.z, 0.1F, 0.1F, 0.1F, 0.1F, 10));
+                    }
+                }
+            }
+        }
     }
 }

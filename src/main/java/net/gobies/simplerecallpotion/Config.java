@@ -39,7 +39,7 @@ public class Config {
         RECALL_POTION_COOLDOWN = BUILDER.comment("Recall potion cooldown in seconds").define("Cooldown", 0);
         RECALL_POTION_INTERDIMENSIONAL = BUILDER.comment("Whether or not you can recall to spawn from other dimensions").define("Interdimensional", false);
         RECALL_POTION_GLOW = BUILDER.comment("Does recall potion have enchantment glow").define("Glow", false);
-        RECALL_POTION_INGREDIENT = BUILDER.comment("Main ingredient used to brew recall potions").define("Ingredient", "minecraft:ender_eye");
+        RECALL_POTION_INGREDIENT = BUILDER.comment("Main ingredient used to brew recall potions").define("Ingredient", "minecraft:ender_pearl");
         BUILDER.pop();
 
         SPEC = BUILDER.build();
