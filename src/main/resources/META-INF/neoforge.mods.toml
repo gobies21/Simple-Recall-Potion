@@ -1,25 +1,25 @@
 modLoader="javafml"
-loaderVersion = "[47,)"
+loaderVersion = "${loader_version_range}"
 license = "All Rights Reserved"
 
 [[mods]]
 modId="simplerecall"
-version="1.0.2"
+version="1.0.5"
 displayName="Simple Recall Potion"
 authors="gobies"
 description='''simple recall potion inspired by terraria!'''
 
 [[dependencies.simplerecall]]
-modId="forge"
-mandatory= true
-versionRange = "[47,)"
+modId="neoforge"
+mandatory=true
+versionRange="${neo_version_range}"
 ordering="NONE"
 side="BOTH"
 
 [[dependencies.simplerecall]]
 modId="minecraft"
 mandatory= true
-versionRange = "[1.20.1]"
+versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
 

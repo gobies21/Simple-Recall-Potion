@@ -1,24 +1,24 @@
 package net.gobies.simplerecallpotion;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
-@Mod.EventBusSubscriber(modid = SimpleRecallPotion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = SimpleRecallPotion.MOD_ID)
 public class Config {
-    public static ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static ForgeConfigSpec SPEC;
+    public static ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static ModConfigSpec SPEC;
 
-    public static ForgeConfigSpec.ConfigValue<Integer> RECALL_POTION_USE_TIME;
+    public static ModConfigSpec.ConfigValue<Integer> RECALL_POTION_USE_TIME;
     public static int recall_potion_use_time;
-    public static ForgeConfigSpec.ConfigValue<Integer> RECALL_POTION_COOLDOWN;
+    public static ModConfigSpec.ConfigValue<Integer> RECALL_POTION_COOLDOWN;
     public static int recall_potion_cooldown;
-    public static ForgeConfigSpec.ConfigValue<Boolean> RECALL_POTION_INTERDIMENSIONAL;
+    public static ModConfigSpec.ConfigValue<Boolean> RECALL_POTION_INTERDIMENSIONAL;
     public static boolean recall_potion_interdimensional;
-    public static ForgeConfigSpec.ConfigValue<Boolean> RECALL_POTION_GLOW;
+    public static ModConfigSpec.ConfigValue<Boolean> RECALL_POTION_GLOW;
     public static boolean recall_potion_glow;
-    public static ForgeConfigSpec.ConfigValue<String> RECALL_POTION_INGREDIENT;
+    public static ModConfigSpec.ConfigValue<String> RECALL_POTION_INGREDIENT;
     public static String recall_potion_ingredient;
 
     public Config() {

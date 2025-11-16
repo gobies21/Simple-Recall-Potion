@@ -3,11 +3,11 @@ package net.gobies.simplerecallpotion.item;
 
 import net.gobies.simplerecallpotion.SimpleRecallPotion;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-@Mod.EventBusSubscriber(modid = SimpleRecallPotion.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = SimpleRecallPotion.MOD_ID)
 public class CreativeTab {
 
     @SubscribeEvent

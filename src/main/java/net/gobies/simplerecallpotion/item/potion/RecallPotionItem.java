@@ -16,10 +16,10 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
-import java.util.Optional;
 
 public class RecallPotionItem extends Item {
     public RecallPotionItem(Properties properties) {
@@ -32,7 +32,7 @@ public class RecallPotionItem extends Item {
     }
 
     @Override
-    public int getUseDuration(@NotNull ItemStack stack) {
+    public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
         return Config.RECALL_POTION_USE_TIME.get();
     }
 
@@ -60,14 +60,16 @@ public class RecallPotionItem extends Item {
             ServerLevel serverWorld = interDimensional ? serverPlayer.server.getLevel(respawnDimension) : (currentDimension == respawnDimension ? Objects.requireNonNull(level.getServer()).getLevel(currentDimension) : null);
             if (serverWorld != null) {
                 try {
-                    Optional<Vec3> respawnLocation = Player.findRespawnPositionAndUseSpawnBlock(serverWorld, Objects.requireNonNull(serverPlayer.getRespawnPosition()), serverPlayer.getRespawnAngle(), false, false);
-                    if (respawnLocation.isPresent()) {
-                        Vec3 respawnVec = respawnLocation.get();
+                    DimensionTransition.PostDimensionTransition postTransition = entity1 -> {};
+                    DimensionTransition respawnLocation = serverPlayer.findRespawnPositionAndUseSpawnBlock(false, postTransition);
+                    if (!respawnLocation.missingRespawnBlock()) {
+                        Vec3 respawnVec = respawnLocation.pos();
                         Vec3 currentVec = serverPlayer.position();
 
                         spawnPortalParticles(serverPlayer, currentVec);
                         serverPlayer.teleportTo(serverWorld, respawnVec.x, respawnVec.y, respawnVec.z, serverPlayer.getYRot(), serverPlayer.getXRot());
                         spawnPortalParticles(serverPlayer, respawnVec);
+                        serverPlayer.resetFallDistance();
                         serverWorld.playSound(null, respawnVec.x, respawnVec.y, respawnVec.z, SoundEvents.ENDERMAN_TELEPORT, serverPlayer.getSoundSource(), 1.0F, 1.0F);
                         serverPlayer.playSound(SoundEvents.ENDERMAN_TELEPORT, 2.0F, 1.0F);
                         serverPlayer.getCooldowns().addCooldown(stack.getItem(), 20 * Config.RECALL_POTION_COOLDOWN.get());

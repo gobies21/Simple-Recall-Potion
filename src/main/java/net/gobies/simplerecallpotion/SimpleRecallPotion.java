@@ -2,13 +2,10 @@ package net.gobies.simplerecallpotion;
 
 import com.mojang.logging.LogUtils;
 import net.gobies.simplerecallpotion.item.PotionRegister;
-import net.gobies.simplerecallpotion.recipe.brewing.BrewingRecipes;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import org.slf4j.Logger;
 
 @Mod(SimpleRecallPotion.MOD_ID)
@@ -17,17 +14,13 @@ public class SimpleRecallPotion {
     public static final String MOD_ID = "simplerecall";
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public SimpleRecallPotion() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public SimpleRecallPotion(IEventBus modBus, ModContainer container) {
 
         PotionRegister.register(modBus);
 
-        BrewingRecipes.register(modBus);
-
-        MinecraftForge.EVENT_BUS.register(this);
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
+
 }
 
 
