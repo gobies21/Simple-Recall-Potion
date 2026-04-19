@@ -115,12 +115,6 @@ configurations {
 }
 
 dependencies {
-    implementation "curse.maven:curios-309927:6529130"
-    implementation "curse.maven:jei-238222:7225068"
-    implementation "curse.maven:crafttweaker-239197:6929483"
-    implementation "curse.maven:irons-spells-n-spellbooks-855414:7114204"
-    implementation "curse.maven:geckolib-388172:7023453"
-    implementation "curse.maven:playeranimator-658587:6024462"
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
